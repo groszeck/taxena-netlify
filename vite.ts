@@ -1,59 +1,40 @@
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
 
   return {
-    root: process.cwd(),
-    base: env.VITE_BASE_URL || '/',
-    plugins: [react(), tsconfigPaths(), svgr()],
+    envDir: './',
+    envPrefix: 'VITE_',
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src'),
-      },
+        '@': path.resolve(__dirname, './src'),
+        '@components': path.resolve(__dirname, './src/components'),
+        '@utils': path.resolve(__dirname, './src/utils'),
+        '@api': path.resolve(__dirname, './src/api')
+      }
     },
+    plugins: [
+      react(),
+      tsconfigPaths()
+    ],
     server: {
-      host: true,
-      port: Number(env.VITE_DEV_PORT) || 3000,
+      port: env.VITE_PORT ? parseInt(env.VITE_PORT, 10) : 3000,
       strictPort: true,
       open: true,
-      proxy: {
-        '/.netlify/functions': {
-          target: 'http://localhost:8888',
-          changeOrigin: true,
-          rewrite: (p) => p.replace(/^\/\.netlify\/functions/, ''),
-        },
-      },
+      host: '0.0.0.0'
     },
     preview: {
-      port: Number(env.VITE_PREVIEW_PORT) || 4173,
-      proxy: {
-        '/.netlify/functions': {
-          target: 'http://localhost:8888',
-          changeOrigin: true,
-          rewrite: (p) => p.replace(/^\/\.netlify\/functions/, ''),
-        },
-      },
+      port: env.VITE_PREVIEW_PORT ? parseInt(env.VITE_PREVIEW_PORT, 10) : 4173,
+      strictPort: true,
+      host: '0.0.0.0'
     },
     build: {
       outDir: 'dist',
       sourcemap: true,
-      emptyOutDir: true,
       rollupOptions: {
-        output: {
-          entryFileNames: 'assets/[name].[hash].js',
-          chunkFileNames: 'assets/[name].[hash].js',
-          assetFileNames: 'assets/[name].[hash].[ext]',
-        },
-      },
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          includePaths: [path.resolve(__dirname, 'src')],
-          additionalData: `@import "styles/variables.scss";`,
-        },
-      },
-    },
+        input: path.resolve(__dirname, 'index.html')
+      }
+    }
   }
 })
