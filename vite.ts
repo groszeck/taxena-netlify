@@ -1,50 +1,44 @@
-const root = process.cwd()
-  const env = loadEnv(mode, root)
-  const isDev = command === 'serve'
-  const port = Number(env.VITE_PORT) || 3000
-  const proxyTarget = env.NETLIFY_DEV_URL || 'http://localhost:8888'
+const rawEnv = loadEnv(mode, process.cwd(), 'VITE_')
 
-  const defineEnv = Object.fromEntries(
-    Object.entries(env)
-      .filter(([key]) => key.startsWith('VITE_'))
-      .map(([key, val]) => [`import.meta.env.${key}`, JSON.stringify(val)])
-  )
+  // Validate and coerce environment variables
+  const envSchema = z.object({
+    VITE_BASE_URL: z.string().optional(),
+    VITE_DEV_SERVER_PORT: z
+      .string()
+      .regex(/^\d+$/, { message: 'VITE_DEV_SERVER_PORT must be a number' })
+      .optional(),
+  })
+  const parsedEnv = envSchema.parse(rawEnv)
+
+  const base = parsedEnv.VITE_BASE_URL ?? '/'
+  const port = parsedEnv.VITE_DEV_SERVER_PORT != null
+    ? Number(parsedEnv.VITE_DEV_SERVER_PORT)
+    : 3000
 
   return {
-    root,
-    base: env.VITE_BASE || '/',
-    define: defineEnv,
-    resolve: {
-      alias: {
-        '@': path.resolve(root, 'src'),
-      },
-    },
-    plugins: [react()],
+    root: path.resolve(__dirname, 'src'),
+    base,
     server: {
       port,
+      open: true,
       strictPort: true,
-      ...(isDev && {
-        proxy: {
-          '/api': {
-            target: proxyTarget,
-            changeOrigin: true,
-            rewrite: p => p.replace(/^\/api/, '/.netlify/functions'),
-          },
-        },
-      }),
+      fs: {
+        strict: true
+      }
     },
     build: {
-      outDir: 'dist',
-      assetsDir: 'assets',
-      sourcemap: env.VITE_SOURCEMAP === 'true',
-      rollupOptions: {
-        input: path.resolve(root, 'index.html'),
-        output: {
-          entryFileNames: 'assets/[name]-[hash].js',
-          chunkFileNames: 'assets/[name]-[hash].js',
-          assetFileNames: 'assets/[name]-[hash].[ext]',
-        },
-      },
+      outDir: path.resolve(__dirname, 'dist'),
+      emptyOutDir: true,
+      sourcemap: mode === 'development'
     },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    },
+    plugins: [
+      react(),
+      tsconfigPaths()
+    ]
   }
 })
