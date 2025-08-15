@@ -1,0 +1,102 @@
+lockfileVersion: 5.4
+importers:
+  .:
+    specifiers:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-router-dom: ^6.10.0
+      framer-motion: ^7.6.2
+      typescript: ^4.9.5
+      vite: ^4.3.6
+      sass: ^1.63.6
+      pg: ^8.10.0
+      neon-client: ^0.3.0
+      dotenv: ^16.0.3
+      "@netlify/functions": ^1.4.0
+      "@types/node": ^18.16.3
+      "@types/react": ^18.0.37
+      "@types/react-dom": ^18.0.11
+      "@types/react-router-dom": ^6.8.4
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0
+      react-router-dom: 6.10.0
+      framer-motion: 7.6.2
+      typescript: 4.9.5
+      vite: 4.3.6
+      sass: 1.63.6
+      pg: 8.10.0
+      neon-client: 0.3.0
+      dotenv: 16.0.3
+      "@netlify/functions": 1.4.0
+    devDependencies:
+      "@types/node": 18.16.3
+      "@types/react": 18.0.37
+      "@types/react-dom": 18.0.11
+      "@types/react-router-dom": 6.8.4
+packages:
+  /react/18.2.0:
+    resolution:
+      integrity: sha512-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+  /react-dom/18.2.0:
+    resolution:
+      integrity: sha512-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+    dependencies:
+      react: 18.2.0
+      scheduler: 0.23.0
+  /react-router-dom/6.10.0:
+    resolution:
+      integrity: sha512-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    dependencies:
+      react-router: 6.10.0
+      react: 18.2.0
+      react-dom: 18.2.0
+  /framer-motion/7.6.2:
+    resolution:
+      integrity: sha512-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    dependencies:
+      ts-invariant: 0.7.0
+      tslib: 2.5.0
+  /typescript/4.9.5:
+    resolution:
+      integrity: sha512-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  /vite/4.3.6:
+    resolution:
+      integrity: sha512-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+    dependencies:
+      rollup: 3.20.3
+      esbuild: 0.19.2
+  /sass/1.63.6:
+    resolution:
+      integrity: sha512-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+  /pg/8.10.0:
+    resolution:
+      integrity: sha512-eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  /neon-client/0.3.0:
+    resolution:
+      integrity: sha512-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  /dotenv/16.0.3:
+    resolution:
+      integrity: sha512-gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  /@netlify/functions/1.4.0:
+    resolution:
+      integrity: sha512-hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  /@types/node/18.16.3:
+    resolution:
+      integrity: sha512-iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+    dev: true
+  /@types/react/18.0.37:
+    resolution:
+      integrity: sha512-jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+    dev: true
+  /@types/react-dom/18.0.11:
+    resolution:
+      integrity: sha512-kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+    dev: true
+  /@types/react-router-dom/6.8.4:
+    resolution:
+      integrity: sha512-llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
+    dev: true
