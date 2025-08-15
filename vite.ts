@@ -1,40 +1,50 @@
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
+const root = process.cwd()
+  const env = loadEnv(mode, root)
+  const isDev = command === 'serve'
+  const port = Number(env.VITE_PORT) || 3000
+  const proxyTarget = env.NETLIFY_DEV_URL || 'http://localhost:8888'
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), 'VITE_')
+  const defineEnv = Object.fromEntries(
+    Object.entries(env)
+      .filter(([key]) => key.startsWith('VITE_'))
+      .map(([key, val]) => [`import.meta.env.${key}`, JSON.stringify(val)])
+  )
 
   return {
-    envDir: './',
-    envPrefix: 'VITE_',
+    root,
+    base: env.VITE_BASE || '/',
+    define: defineEnv,
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@utils': path.resolve(__dirname, './src/utils'),
-        '@api': path.resolve(__dirname, './src/api')
-      }
+        '@': path.resolve(root, 'src'),
+      },
     },
-    plugins: [
-      react(),
-      tsconfigPaths()
-    ],
+    plugins: [react()],
     server: {
-      port: env.VITE_PORT ? parseInt(env.VITE_PORT, 10) : 3000,
+      port,
       strictPort: true,
-      open: true,
-      host: '0.0.0.0'
-    },
-    preview: {
-      port: env.VITE_PREVIEW_PORT ? parseInt(env.VITE_PREVIEW_PORT, 10) : 4173,
-      strictPort: true,
-      host: '0.0.0.0'
+      ...(isDev && {
+        proxy: {
+          '/api': {
+            target: proxyTarget,
+            changeOrigin: true,
+            rewrite: p => p.replace(/^\/api/, '/.netlify/functions'),
+          },
+        },
+      }),
     },
     build: {
       outDir: 'dist',
-      sourcemap: true,
+      assetsDir: 'assets',
+      sourcemap: env.VITE_SOURCEMAP === 'true',
       rollupOptions: {
-        input: path.resolve(__dirname, 'index.html')
-      }
-    }
+        input: path.resolve(root, 'index.html'),
+        output: {
+          entryFileNames: 'assets/[name]-[hash].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash].[ext]',
+        },
+      },
+    },
   }
 })
